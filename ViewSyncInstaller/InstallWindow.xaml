@@ -1,0 +1,39 @@
+﻿<Window x:Class="ViewSyncInstaller.InstallWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Name="TheWindow"
+        Height="200" Width="400" 
+        SizeToContent="Height"
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen" >
+    <StackPanel Margin="8">
+        <TextBlock 
+            Name="InstallerTextBlock" Margin="8" TextAlignment="Center" 
+            Text="{Binding Message, ElementName=TheWindow}" />
+        
+        <ItemsControl Name="InstallsList">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="8" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock 
+                            Name="InstallTextBlock" Margin="8" TextAlignment="Left" TextWrapping="Wrap"
+                            Text="{Binding Path=Message}" />
+                        <ProgressBar Grid.Column="1"
+                            Name="InstallProgressBar" Margin="8" Height="20"
+                            Maximum="1"
+                            Value="{Binding Path=Level}" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <Button 
+            Name="OkayButton" Content="Finish" Width="50" 
+            Visibility="Collapsed"
+            Click="OkayButton_Click" />
+    </StackPanel>
+</Window>
