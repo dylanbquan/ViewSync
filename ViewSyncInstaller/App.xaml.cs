@@ -24,8 +24,8 @@ namespace ViewSyncInstaller
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            mainWindow = new InstallWindow(ViewSyncInstaller.Properties.Resources.AppName + " Installer", 
-                "Installing " + ViewSyncInstaller.Properties.Resources.AppName + " ...");
+            mainWindow = new InstallWindow(InstallData.AppName + " Installer", 
+                "Installing " + InstallData.AppName + " ...");
             this.MainWindow = mainWindow;
             mainWindow.Show();
             while (!mainWindow.IsInitialized) ;
@@ -38,8 +38,8 @@ namespace ViewSyncInstaller
         {
             Thread.Sleep(1000); //initial stall
 
-            Guid guid = new Guid(ViewSyncInstaller.Properties.Resources.AppGuid);
-            string[] versions = ViewSyncInstaller.Properties.Resources.Versions.Split(',', ' ');
+            Guid guid = new Guid(InstallData.AppGuid);
+            string[] versions = InstallData.Versions.Split(',', ' ');
             
             List<RevitProduct> products = RevitProductUtility.GetAllInstalledRevitProducts();
 
@@ -51,18 +51,24 @@ namespace ViewSyncInstaller
                 InstallItem install = new InstallItem(versionYear);
                 mainWindow.AddInstallItem(install);
 
-                string dllPath = WriteProgramFiles(versionYear);
-
-                if(dllPath != null) WriteAddInManifest(dllPath, guid, product);
-
                 //make progress visible
-                for(int fakeProgress = 0; fakeProgress < 10; fakeProgress++)
+                for (int fakeProgress = 0; fakeProgress < 10; fakeProgress++)
                 {
                     double level = (fakeProgress / 10.0);
                     install.Level = level;
                     install.Message = string.Format("Installing for {0}... {1:#%}", product.Name, level);
                     Thread.Sleep(100);
                 }
+
+                string dllPath = WriteProgramFiles(versionYear);
+                if (dllPath == null || !WriteAddInManifest(dllPath, guid, product))
+                {
+                    //fail installation for this product
+                    install.Message = string.Format("Installation for {0} failed.", product.Name);
+                    install.Level = 0.0;
+                    continue;
+                }
+
                 install.Level = 1.0;
                 install.Message = string.Format("Installed for {0} {1:#%}", product.Name, 1.0);
             }
@@ -81,17 +87,15 @@ namespace ViewSyncInstaller
                 //TODO: get dll stream from resource file not link
                 Stream libraryStream = 
                     typeof(App).Assembly.GetManifestResourceStream(
-                    typeof(App).Namespace + '.' + ViewSyncInstaller.Properties.Resources.Namespace + version + ".dll");
+                    typeof(App).Namespace + '.' + InstallData.Namespace + version + ".dll");
                 if(libraryStream == null) return null;
 
                 string deploymentLocation = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\" + 
-                    ViewSyncInstaller.Properties.Resources.InstallFolder + "\\" + 
-                    ViewSyncInstaller.Properties.Resources.AppName + "\\";
+                    InstallData.InstallFolder + "\\" + 
+                    InstallData.AppName + "\\";
                 if(!Directory.Exists(deploymentLocation)) Directory.CreateDirectory(deploymentLocation);
                 
-                //TODO: verify file is not locked if exists
-
-                dllPath = deploymentLocation + ViewSyncInstaller.Properties.Resources.Namespace + version + ".dll";
+                dllPath = deploymentLocation + InstallData.Namespace + version + ".dll";
                 libraryStream.CopyTo(new FileStream(dllPath, FileMode.Create));
 
             } catch(Exception) {
@@ -102,26 +106,33 @@ namespace ViewSyncInstaller
 
         bool WriteAddInManifest(string dllPath, Guid guid, RevitProduct product)
         {
-            //create application and/or command entries
-            RevitAddInCommand addInComm = new RevitAddInCommand(
-                dllPath,
-                guid,
-                ViewSyncInstaller.Properties.Resources.ClassFullName,
-                ViewSyncInstaller.Properties.Resources.VendorName);
+            try
+            {
+                //create application and/or command entries
+                RevitAddInCommand addInComm = new RevitAddInCommand(
+                    dllPath,
+                    guid,
+                    InstallData.ClassFullName,
+                    InstallData.VendorName);
 
-            addInComm.VendorDescription = ViewSyncInstaller.Properties.Resources.VendorDescription;
-            addInComm.Text = ViewSyncInstaller.Properties.Resources.AppName;
-            addInComm.VisibilityMode = VisibilityMode.NotVisibleWhenNoActiveDocument;
+                addInComm.VendorDescription = InstallData.VendorDescription;
+                addInComm.Text = InstallData.AppName;
+                addInComm.VisibilityMode = VisibilityMode.NotVisibleWhenNoActiveDocument;
 
-            //create manifest and add apps/comms
-            RevitAddInManifest manifest = new RevitAddInManifest();
-            manifest.AddInCommands.Add(addInComm);
+                //create manifest and add apps/comms
+                RevitAddInManifest manifest = new RevitAddInManifest();
+                manifest.AddInCommands.Add(addInComm);
 
-            //save manifest to file
-            if (!Directory.Exists(product.CurrentUserAddInFolder)) 
-                Directory.CreateDirectory(product.CurrentUserAddInFolder);
+                //save manifest to file
+                if (!Directory.Exists(product.CurrentUserAddInFolder))
+                    Directory.CreateDirectory(product.CurrentUserAddInFolder);
 
-            manifest.SaveAs(product.CurrentUserAddInFolder + "\\" + ViewSyncInstaller.Properties.Resources.Namespace + ".addin");
+                manifest.SaveAs(product.CurrentUserAddInFolder + "\\" + InstallData.Namespace + ".addin");
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
             return true;
         }

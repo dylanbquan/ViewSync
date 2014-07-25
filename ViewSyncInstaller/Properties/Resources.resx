@@ -117,43 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppGuid" xml:space="preserve">
-    <value>90AC9D4C-96AC-4269-8927-E85663943DD3</value>
-    <comment>manifest application guid</comment>
-  </data>
-  <data name="AppName" xml:space="preserve">
-    <value>View Sync</value>
-    <comment>user visible application name</comment>
-  </data>
-  <data name="ClassFullName" xml:space="preserve">
-    <value>ViewSync.SyncViews</value>
-    <comment>command class full name</comment>
-  </data>
-  <data name="InstallFolder" xml:space="preserve">
-    <value>Pura Evo</value>
-    <comment>location in program files to store application files</comment>
-  </data>
-  <data name="Namespace" xml:space="preserve">
-    <value>ViewSync</value>
-    <comment>command class namespace</comment>
-  </data>
-  <data name="VendorDescription" xml:space="preserve">
-    <value>Pura Evo Revit Utilities</value>
-    <comment>manifest vendor description</comment>
-  </data>
-  <data name="VendorName" xml:space="preserve">
-    <value>Pura Evo</value>
-    <comment>manifest vendor</comment>
-  </data>
-  <data name="Versions" xml:space="preserve">
-    <value>2013, 2014</value>
-    <comment>list of applicable version years</comment>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ViewSync2013" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\ViewSync2013\bin\Release\ViewSync2013.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ViewSync2014" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\ViewSync2014\bin\Release\ViewSync2014.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
 </root>

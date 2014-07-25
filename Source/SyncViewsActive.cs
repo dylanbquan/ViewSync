@@ -8,6 +8,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using Autodesk.Revit.UI.Events;
 
 namespace ViewSync
 {
@@ -24,12 +25,12 @@ namespace ViewSync
         static private UIApplication uiApp;
         static private List<XYZ> corners, prevCorners;
         static private List<ElementId> syncedViewIds;
-        static public EventHandler<Autodesk.Revit.UI.Events.IdlingEventArgs> syncHandler;
+        static public EventHandler<IdlingEventArgs> syncHandler;
 
         public Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             if(uiApp == null) uiApp = commandData.Application;
-            if(syncHandler == null) syncHandler = new EventHandler<Autodesk.Revit.UI.Events.IdlingEventArgs>( SyncOneView );
+            if(syncHandler == null) syncHandler = new EventHandler<IdlingEventArgs>( SyncOneView );
 
             active = !active;
             if(active) {
@@ -43,7 +44,7 @@ namespace ViewSync
             return Result.Succeeded;
         }
 
-        void SyncOneView(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
+        void SyncOneView(object sender, IdlingEventArgs e)
         {
             UIDocument uiDoc = uiApp.ActiveUIDocument;
             View activeView = uiDoc.ActiveView;

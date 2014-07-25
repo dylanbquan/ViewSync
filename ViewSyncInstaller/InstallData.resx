@@ -119,34 +119,34 @@
   </resheader>
   <data name="AppGuid" xml:space="preserve">
     <value>90AC9D4C-96AC-4269-8927-E85663943DD3</value>
-    <comment>add in manifest application guid</comment>
+    <comment>manifest application guid</comment>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>View Sync</value>
     <comment>user visible application name</comment>
   </data>
-  <data name="BaseName" xml:space="preserve">
-    <value>ViewSync</value>
-    <comment>code compatible base name for dll, namespaces, classes, etc.</comment>
-  </data>
-  <data name="ClassName" xml:space="preserve">
-    <value>SyncViews</value>
-    <comment>Name of command or application class</comment>
+  <data name="ClassFullName" xml:space="preserve">
+    <value>ViewSync.SyncViews</value>
+    <comment>command class full name</comment>
   </data>
   <data name="InstallFolder" xml:space="preserve">
     <value>Pura Evo</value>
-    <comment>the location within program files to store application files</comment>
+    <comment>location in program files to store application files</comment>
+  </data>
+  <data name="Namespace" xml:space="preserve">
+    <value>ViewSync</value>
+    <comment>command class namespace</comment>
   </data>
   <data name="VendorDescription" xml:space="preserve">
     <value>Pura Evo Revit Utilities</value>
-    <comment>add in manifest vendor description</comment>
+    <comment>manifest vendor description</comment>
   </data>
   <data name="VendorName" xml:space="preserve">
     <value>Pura Evo</value>
-    <comment>add in manifest vendor</comment>
+    <comment>manifest vendor</comment>
   </data>
   <data name="Versions" xml:space="preserve">
-    <value>2013, 2014</value>
+    <value>2013, 2014, 2015</value>
     <comment>list of applicable version years</comment>
   </data>
 </root>
