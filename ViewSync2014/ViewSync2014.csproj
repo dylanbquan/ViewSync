@@ -55,6 +55,12 @@
     <Compile Include="..\Source\SyncViews.cs">
       <Link>SyncViews.cs</Link>
     </Compile>
+    <Compile Include="..\Source\SyncViewsActive.cs">
+      <Link>SyncViewsActive.cs</Link>
+    </Compile>
+    <Compile Include="..\Source\ViewBox.cs">
+      <Link>ViewBox.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

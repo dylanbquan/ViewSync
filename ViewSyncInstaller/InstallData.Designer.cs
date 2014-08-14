@@ -61,29 +61,38 @@ namespace ViewSyncInstaller {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ViewSync.SyncViews.
+        /// </summary>
+        internal static string ClassFullName {
+            get {
+                return ResourceManager.GetString("ClassFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 90AC9D4C-96AC-4269-8927-E85663943DD3.
         /// </summary>
-        internal static string AppGuid {
+        internal static string CommandGuid {
             get {
-                return ResourceManager.GetString("AppGuid", resourceCulture);
+                return ResourceManager.GetString("CommandGuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 89AEB417-2B13-412D-8429-2F0AB38EACA2.
+        /// </summary>
+        internal static string CommandGuid1 {
+            get {
+                return ResourceManager.GetString("CommandGuid1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to View Sync.
         /// </summary>
-        internal static string AppName {
+        internal static string CommandName {
             get {
-                return ResourceManager.GetString("AppName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ViewSync.SyncViews.
-        /// </summary>
-        internal static string ClassFullName {
-            get {
-                return ResourceManager.GetString("ClassFullName", resourceCulture);
+                return ResourceManager.GetString("CommandName", resourceCulture);
             }
         }
         
@@ -124,7 +133,7 @@ namespace ViewSyncInstaller {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2013, 2014, 2015.
+        ///   Looks up a localized string similar to 2013,2014,2015.
         /// </summary>
         internal static string Versions {
             get {

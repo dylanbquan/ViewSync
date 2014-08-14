@@ -24,8 +24,8 @@ namespace ViewSyncInstaller
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            mainWindow = new InstallWindow(InstallData.AppName + " Installer", 
-                "Installing " + InstallData.AppName + " ...");
+            mainWindow = new InstallWindow(InstallData.CommandName + " Installer", 
+                "Installing " + InstallData.CommandName + " ...");
             this.MainWindow = mainWindow;
             mainWindow.Show();
             while (!mainWindow.IsInitialized) ;
@@ -38,14 +38,15 @@ namespace ViewSyncInstaller
         {
             Thread.Sleep(1000); //initial stall
 
-            Guid guid = new Guid(InstallData.AppGuid);
             string[] versions = InstallData.Versions.Split(',', ' ');
             
             List<RevitProduct> products = RevitProductUtility.GetAllInstalledRevitProducts();
 
             foreach(RevitProduct product in products)
             {
-                string versionYear = product.Version.ToString().Substring("Revit".Length);
+                if (product.Version == RevitVersion.Unknown) continue;
+
+                string versionYear = product.Version.ToString().Substring("Revit".Length); //enum Revit####
                 if(!versions.Contains<string>(versionYear)) continue;
 
                 InstallItem install = new InstallItem(versionYear);
@@ -61,7 +62,7 @@ namespace ViewSyncInstaller
                 }
 
                 string dllPath = WriteProgramFiles(versionYear);
-                if (dllPath == null || !WriteAddInManifest(dllPath, guid, product))
+                if (dllPath == null || !WriteAddInManifest(dllPath, product))
                 {
                     //fail installation for this product
                     install.Message = string.Format("Installation for {0} failed.", product.Name);
@@ -92,7 +93,7 @@ namespace ViewSyncInstaller
 
                 string deploymentLocation = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\" + 
                     InstallData.InstallFolder + "\\" + 
-                    InstallData.AppName + "\\";
+                    InstallData.CommandName + "\\";
                 if(!Directory.Exists(deploymentLocation)) Directory.CreateDirectory(deploymentLocation);
                 
                 dllPath = deploymentLocation + InstallData.Namespace + version + ".dll";
@@ -104,19 +105,19 @@ namespace ViewSyncInstaller
             return dllPath;
         }
 
-        bool WriteAddInManifest(string dllPath, Guid guid, RevitProduct product)
+        bool WriteAddInManifest(string dllPath, RevitProduct product)
         {
             try
             {
                 //create application and/or command entries
                 RevitAddInCommand addInComm = new RevitAddInCommand(
                     dllPath,
-                    guid,
+                    new Guid(InstallData.CommandGuid),
                     InstallData.ClassFullName,
                     InstallData.VendorName);
 
                 addInComm.VendorDescription = InstallData.VendorDescription;
-                addInComm.Text = InstallData.AppName;
+                addInComm.Text = InstallData.CommandName;
                 addInComm.VisibilityMode = VisibilityMode.NotVisibleWhenNoActiveDocument;
 
                 //create manifest and add apps/comms

@@ -117,17 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppGuid" xml:space="preserve">
-    <value>90AC9D4C-96AC-4269-8927-E85663943DD3</value>
-    <comment>manifest application guid</comment>
-  </data>
-  <data name="AppName" xml:space="preserve">
-    <value>View Sync</value>
-    <comment>user visible application name</comment>
-  </data>
   <data name="ClassFullName" xml:space="preserve">
     <value>ViewSync.SyncViews</value>
     <comment>command class full name</comment>
+  </data>
+  <data name="CommandGuid" xml:space="preserve">
+    <value>90AC9D4C-96AC-4269-8927-E85663943DD3</value>
+    <comment>manifest command guid</comment>
+  </data>
+  <data name="CommandGuid1" xml:space="preserve">
+    <value>89AEB417-2B13-412D-8429-2F0AB38EACA2</value>
+  </data>
+  <data name="CommandName" xml:space="preserve">
+    <value>View Sync</value>
+    <comment>user visible command name</comment>
   </data>
   <data name="InstallFolder" xml:space="preserve">
     <value>Pura Evo</value>
@@ -146,7 +149,7 @@
     <comment>manifest vendor</comment>
   </data>
   <data name="Versions" xml:space="preserve">
-    <value>2013, 2014, 2015</value>
+    <value>2013,2014,2015</value>
     <comment>list of applicable version years</comment>
   </data>
 </root>
