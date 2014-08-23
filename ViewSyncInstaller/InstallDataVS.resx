@@ -125,9 +125,6 @@
     <value>90AC9D4C-96AC-4269-8927-E85663943DD3</value>
     <comment>manifest command guid</comment>
   </data>
-  <data name="CommandGuid1" xml:space="preserve">
-    <value>89AEB417-2B13-412D-8429-2F0AB38EACA2</value>
-  </data>
   <data name="CommandName" xml:space="preserve">
     <value>View Sync</value>
     <comment>user visible command name</comment>

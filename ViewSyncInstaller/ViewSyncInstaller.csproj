@@ -73,10 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="InstallData.Designer.cs">
+    <Compile Include="InstallDataVS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InstallData.resx</DependentUpon>
+      <DependentUpon>InstallDataVS.resx</DependentUpon>
     </Compile>
     <Page Include="InstallWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -85,6 +85,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="InstallDataVA.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InstallDataVA.resx</DependentUpon>
     </Compile>
     <Compile Include="InstallItem.cs" />
     <Compile Include="InstallWindow.xaml.cs">
@@ -106,13 +111,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="InstallDataVA.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>InstallDataVA.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="InstallData.resx">
+    <EmbeddedResource Include="InstallDataVS.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>InstallData.Designer.cs</LastGenOutput>
+      <LastGenOutput>InstallDataVS.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

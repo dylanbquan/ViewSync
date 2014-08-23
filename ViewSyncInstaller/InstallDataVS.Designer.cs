@@ -22,14 +22,14 @@ namespace ViewSyncInstaller {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class InstallData {
+    internal class InstallDataVS {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal InstallData() {
+        internal InstallDataVS() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace ViewSyncInstaller {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ViewSyncInstaller.InstallData", typeof(InstallData).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ViewSyncInstaller.InstallDataVS", typeof(InstallDataVS).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -75,15 +75,6 @@ namespace ViewSyncInstaller {
         internal static string CommandGuid {
             get {
                 return ResourceManager.GetString("CommandGuid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 89AEB417-2B13-412D-8429-2F0AB38EACA2.
-        /// </summary>
-        internal static string CommandGuid1 {
-            get {
-                return ResourceManager.GetString("CommandGuid1", resourceCulture);
             }
         }
         

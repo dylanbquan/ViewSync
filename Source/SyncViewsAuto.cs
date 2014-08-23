@@ -11,14 +11,13 @@ namespace ViewSync
 {
     /// <summary>
     /// Active View Sync Command
-    /// Not available in 2013
     /// </summary>
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    class SyncViewsActive : IExternalCommand
+    class SyncViewsAuto : IExternalCommand
     {
         private static UIApplication application;
-        private static bool syncActive = false;
+        private static bool syncAuto = false;
         private static ViewBox prevBox;
         private static List<ElementId> syncedViewIds;
         private static EventHandler<IdlingEventArgs> syncHandler;
@@ -32,8 +31,8 @@ namespace ViewSync
             if (application == null) application = commandData.Application;
             if (syncHandler == null) syncHandler = new EventHandler<IdlingEventArgs>(SyncOneView);
 
-            syncActive = !syncActive;
-            if (syncActive)
+            syncAuto = !syncAuto;
+            if (syncAuto)
             {
                 commandData.Application.Idling += syncHandler;
                 prevBox = new ViewBox();

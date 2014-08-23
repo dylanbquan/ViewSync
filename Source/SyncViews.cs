@@ -28,16 +28,15 @@ namespace ViewSync
                 ViewBox otherBox = new ViewBox();
 
                 //Sync other graphical views
-                foreach(UIView uiv in uiDoc.GetOpenUIViews())
+                foreach(UIView uiv in uiDoc.GetOpenUIViews().Reverse<UIView>()) //reverse mainatains window order in 2013
                 {
                     //exclude current view
                     if(uiv.ViewId == currentView.Id) continue;
 
                     View view = doc.GetElement(uiv.ViewId) as View;
 
-                    if (!otherBox.Set(view)) continue; //checks for closed minimized and non graphical views
-
-                    if (otherBox.IsAlmostEqualTo(currentBox)) continue;
+                    if (!ViewBox.CanZoom(view)) continue;
+                    if (otherBox.Set(view) && otherBox.IsAlmostEqualTo(currentBox)) continue;
 
 #if RVT2013
                     uiDoc.ActiveView = view;

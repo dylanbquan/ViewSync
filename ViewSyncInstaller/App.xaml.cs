@@ -24,8 +24,8 @@ namespace ViewSyncInstaller
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            mainWindow = new InstallWindow(InstallData.CommandName + " Installer", 
-                "Installing " + InstallData.CommandName + " ...");
+            mainWindow = new InstallWindow(InstallDataVS.CommandName + " Installer", 
+                "Installing " + InstallDataVS.CommandName + " ...");
             this.MainWindow = mainWindow;
             mainWindow.Show();
             while (!mainWindow.IsInitialized) ;
@@ -38,9 +38,11 @@ namespace ViewSyncInstaller
         {
             Thread.Sleep(1000); //initial stall
 
-            string[] versions = InstallData.Versions.Split(',', ' ');
+            string[] versions = InstallDataVS.Versions.Split(',', ' ');
             
             List<RevitProduct> products = RevitProductUtility.GetAllInstalledRevitProducts();
+            //TODO: group products by year, write dll once per year group,
+            // verify year group uses same manifest location, use one install item per year group
 
             foreach(RevitProduct product in products)
             {
@@ -88,15 +90,15 @@ namespace ViewSyncInstaller
                 //TODO: get dll stream from resource file not link
                 Stream libraryStream = 
                     typeof(App).Assembly.GetManifestResourceStream(
-                    typeof(App).Namespace + '.' + InstallData.Namespace + version + ".dll");
+                    typeof(App).Namespace + '.' + InstallDataVS.Namespace + version + ".dll");
                 if(libraryStream == null) return null;
 
                 string deploymentLocation = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\" + 
-                    InstallData.InstallFolder + "\\" + 
-                    InstallData.CommandName + "\\";
+                    InstallDataVS.InstallFolder + "\\" + 
+                    InstallDataVS.CommandName + "\\";
                 if(!Directory.Exists(deploymentLocation)) Directory.CreateDirectory(deploymentLocation);
                 
-                dllPath = deploymentLocation + InstallData.Namespace + version + ".dll";
+                dllPath = deploymentLocation + InstallDataVS.Namespace + version + ".dll";
                 libraryStream.CopyTo(new FileStream(dllPath, FileMode.Create));
 
             } catch(Exception) {
@@ -112,12 +114,12 @@ namespace ViewSyncInstaller
                 //create application and/or command entries
                 RevitAddInCommand addInComm = new RevitAddInCommand(
                     dllPath,
-                    new Guid(InstallData.CommandGuid),
-                    InstallData.ClassFullName,
-                    InstallData.VendorName);
+                    new Guid(InstallDataVS.CommandGuid),
+                    InstallDataVS.ClassFullName,
+                    InstallDataVS.VendorName);
 
-                addInComm.VendorDescription = InstallData.VendorDescription;
-                addInComm.Text = InstallData.CommandName;
+                addInComm.VendorDescription = InstallDataVS.VendorDescription;
+                addInComm.Text = InstallDataVS.CommandName;
                 addInComm.VisibilityMode = VisibilityMode.NotVisibleWhenNoActiveDocument;
 
                 //create manifest and add apps/comms
@@ -128,7 +130,7 @@ namespace ViewSyncInstaller
                 if (!Directory.Exists(product.CurrentUserAddInFolder))
                     Directory.CreateDirectory(product.CurrentUserAddInFolder);
 
-                manifest.SaveAs(product.CurrentUserAddInFolder + "\\" + InstallData.Namespace + ".addin");
+                manifest.SaveAs(product.CurrentUserAddInFolder + "\\" + InstallDataVS.Namespace + ".addin");
             }
             catch (Exception)
             {
