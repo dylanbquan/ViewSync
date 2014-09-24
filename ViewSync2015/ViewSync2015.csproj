@@ -55,8 +55,8 @@
     <Compile Include="..\Source\SyncViews.cs">
       <Link>SyncViews.cs</Link>
     </Compile>
-    <Compile Include="..\Source\SyncViewsActive.cs">
-      <Link>SyncViewsActive.cs</Link>
+    <Compile Include="..\Source\SyncViewsAuto.cs">
+      <Link>SyncViewsAuto.cs</Link>
     </Compile>
     <Compile Include="..\Source\ViewBox.cs">
       <Link>ViewBox.cs</Link>
