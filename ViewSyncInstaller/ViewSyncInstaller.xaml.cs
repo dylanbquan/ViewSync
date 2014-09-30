@@ -56,14 +56,14 @@ namespace ViewSyncInstaller
             versionsDLL = versionsVS.Union<string>(versionsVA).ToList<string>();
             
             List<RevitProduct> allProducts = RevitProductUtility.GetAllInstalledRevitProducts();
-            //TODO: group products by year, write dll once per year group,
-            // verify year group uses same manifest location, use one install item per year group
-
-            foreach(string version in versionsDLL) //RevitProduct product in products)
+            
+            foreach(string version in versionsDLL)
             {
                 List<RevitProduct> versionProducts = allProducts.
                     Where<RevitProduct>(p => p.Version.ToString().Contains(version)).
                     ToList<RevitProduct>();
+
+                if(versionProducts.Count < 1) continue;
 
                 string installName = "Revit " + version;
                 InstallItem install = new InstallItem(installName);
@@ -103,7 +103,7 @@ namespace ViewSyncInstaller
                 }
                 if (!manifestSuccess)
                 {
-                    //fail installation for this product
+                    //fail installation for this product (let's try to centralize this fail so we can reverse progress animation)
                     install.Message = string.Format("Installation for {0} failed.", installName);
                     install.Level = 0.0;
                     continue;
