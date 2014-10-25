@@ -1,0 +1,4 @@
+<Shortcuts>
+  <ShortcutItem CommandName="External &#xA;Tools:View Sync" CommandId="90ac9d4c-96ac-4269-8927-e85663943dd3" Shortcuts="VS" Paths="Add-Ins&gt;External" />
+  <ShortcutItem CommandName="External &#xA;Tools:View Sync Auto" CommandId="89aeb417-2b13-412d-8429-2f0ab38eaca2" Shortcuts="VA" Paths="Add-Ins&gt;External" />
+</Shortcuts>

@@ -72,8 +72,8 @@ namespace ViewSyncInstaller
             Dispatcher.BeginInvoke(DispatcherPriority.Background,
                                 new CompleteDelegate(CompleteInstall));
         }
-        public delegate void CompleteDelegate();
-        public void CompleteInstall()
+        private delegate void CompleteDelegate();
+        private void CompleteInstall()
         {
             OkayButton.Visibility = Visibility.Visible;
         }
@@ -95,18 +95,5 @@ namespace ViewSyncInstaller
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
-        //private Visibility okayButtonVisibility = Visibility.Visible;
-        //private Visibility OkayButtonVisibility
-        //{
-        //    get { return okayButtonVisibility; }
-        //    set {
-        //        if(okayButtonVisibility != value) {
-        //            okayButtonVisibility = value;
-        //            NotifyPropertyChanged("OkayButtonVisibility");
-        //        }
-        //    }
-        //}
-
     }
 }

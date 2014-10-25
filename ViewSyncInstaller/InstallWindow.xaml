@@ -24,8 +24,55 @@
                             Text="{Binding Path=Message}" />
                         <ProgressBar Grid.Column="1"
                             Name="InstallProgressBar" Margin="8" Height="20"
-                            Maximum="1"
-                            Value="{Binding Path=Level}" />
+                            Maximum="100">
+                            <ProgressBar.Style>
+                                <Style TargetType="ProgressBar">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=Success}" Value="{x:Null}">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard >
+                                                        <DoubleAnimation Storyboard.TargetProperty="Value" Duration="0:0:1" To="25">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <ElasticEase EasingMode="EaseOut" Oscillations="3" Springiness="1"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Success}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard >
+                                                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" Duration="0:0:1.5" To="Green"/>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Value" Duration="0:0:1" To="100">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <BounceEase EasingMode="EaseOut" Bounces="3" Bounciness="2"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Success}" Value="False">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard >
+                                                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color" Duration="0:0:1.5" To="Red"/>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Value" Duration="0:0:1" To="5">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <BounceEase EasingMode="EaseOut" Bounces="3" Bounciness="3"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ProgressBar.Style>
+                        </ProgressBar>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

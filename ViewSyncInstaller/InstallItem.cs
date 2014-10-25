@@ -27,18 +27,24 @@ namespace ViewSyncInstaller
             }
         }
 
-        private double level = 0;
-        public double Level
+        public void Succeed()
         {
-            get { return level; }
-            set {
-                double temp = 0;
-                temp = value < 0.0 ? 0.0 : value;
-                temp = value > 1.0 ? 1.0 : value;
-                if(temp == level) return;
 
-                level = temp;
-                NotifyPropertyChanged("Level");
+        }
+        public void Fail()
+        {
+
+        }
+
+        private Nullable<bool> success = null;
+        public Nullable<bool> Success
+        {
+            get { return success; }
+            set {
+                if (value != success) {
+                    success = value;
+                    NotifyPropertyChanged("Success");
+                }
             }
         }
 

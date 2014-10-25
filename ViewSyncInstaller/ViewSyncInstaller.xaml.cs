@@ -49,7 +49,7 @@ namespace ViewSyncInstaller
         /// </summary>
         public void Install()
         {
-            Thread.Sleep(1000); //initial stall
+            Thread.Sleep(500); //initial stall
 
             versionsVS = new List<string>(InstallDataVS.Versions.Split(',', ' '));
             versionsVA = new List<string>(InstallDataVA.Versions.Split(',', ' '));
@@ -68,51 +68,51 @@ namespace ViewSyncInstaller
                 string installName = "Revit " + version;
                 InstallItem install = new InstallItem(installName);
                 mainWindow.AddInstallItem(install);
+                //pause here before setting success to true
+                install.Message = string.Format("Installing for {0}...", installName);
+                install.Success = null;
 
-                //make progress visible
-                for (int fakeProgress = 0; fakeProgress < 10; fakeProgress++)
-                {
-                    double progressLevel = (fakeProgress / 10.0);
-                    install.Level = progressLevel;
-                    install.Message = string.Format("Installing for {0}... {1:#%}", installName, progressLevel);
-                    Thread.Sleep(100);
-                }
+                Thread.Sleep(750);
+
+                install.Success = true;
+
+                bool success = true;
 
                 //write files
                 string dllPath = WriteProgramFiles(version);
-                if (dllPath == null)
-                {
-                    //fail installation for this product
-                    install.Message = string.Format("Installation for {0} failed.", installName);
-                    install.Level = 0.0;
-                    continue;
-                }
+                if (dllPath == null) success = false;
 
                 //write manifests
-                bool manifestSuccess = true;
-                List<string> manifestPaths = new List<string>();
-                foreach(RevitProduct product in versionProducts)
-                {
-                    string manifestPath = product.CurrentUserAddInFolder;
-                    if (manifestPaths.Contains(manifestPath)) continue;
+                if (success) {
+                    List<string> manifestPaths = new List<string>();
+                    foreach (RevitProduct product in versionProducts) {
+                        string manifestPath = product.CurrentUserAddInFolder;
+                        if (manifestPaths.Contains(manifestPath)) continue;
 
-                    bool success = WriteAddInManifest(version, dllPath, manifestPath);
-                    if(success) manifestPaths.Add(manifestPath);
+                        bool manifestSuccess = WriteAddInManifest(version, dllPath, manifestPath);
+                        if (manifestSuccess) manifestPaths.Add(manifestPath);
 
-                    manifestSuccess &= success;
+                        success &= manifestSuccess;
+                    }
                 }
-                if (!manifestSuccess)
-                {
+
+                Thread.Sleep(750);
+                
+                if (!success) {
                     //fail installation for this product (let's try to centralize this fail so we can reverse progress animation)
                     install.Message = string.Format("Installation for {0} failed.", installName);
-                    install.Level = 0.0;
+                    install.Success = false;
+                    Thread.Sleep(500);
                     continue;
                 }
 
-                install.Level = 1.0;
+                //install.Level = 1.0;
                 install.Message = string.Format("Installed for {0} {1:#%}", installName, 1.0);
             }
 
+            LogUserInstall();
+
+            Thread.Sleep(500);
             mainWindow.Message = "Installation Complete!";
             mainWindow.Complete();
         }
@@ -206,6 +206,35 @@ namespace ViewSyncInstaller
             }
 
             return true;
+        }
+
+        string logFileName = "install.log";
+        void LogUserInstall()
+        {
+            List<string> line = new List<string>();
+            try {
+                if (!File.Exists(logFileName)) {
+                    line.Add("user name");
+                    line.Add("local time");
+                    line.Add("universal time");
+
+                    File.AppendAllText(
+                    logFileName,
+                    string.Join(",", line)
+                    );
+
+                    line.Clear();
+                }
+
+                line.Add(Environment.UserName);
+                line.Add(DateTime.Now.ToString());
+                line.Add(DateTime.Now.ToUniversalTime().ToString());
+
+                File.AppendAllText(
+                    logFileName,
+                    Environment.NewLine + string.Join(",", line)
+                    );
+            } catch (Exception) { }
         }
 
         /// <summary>
